@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/a8m/djson"
+	"github.com/fatih/structs"
 	"github.com/pquerna/ffjson/ffjson"
 )
 
@@ -15,6 +16,10 @@ var (
 	}
 	filteredPlaceholder = "[FILTERED]"
 )
+
+func init() {
+	structs.DefaultTagName = "json"
+}
 
 func MaskWithEncodingJSON(data []byte) ([]byte, error) {
 	var v interface{}
@@ -80,4 +85,8 @@ func MaskWithFFJSON(data []byte) ([]byte, error) {
 	}
 
 	return out, nil
+}
+
+func MaskStruct(v interface{}) ([]byte, error) {
+	return json.Marshal(mask(structs.Map(v)))
 }
