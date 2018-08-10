@@ -49,3 +49,16 @@ func BenchmarkMask_EncodingJSON(b *testing.B) {
 		})
 	}
 }
+
+func BenchmarkMask_DJSON(b *testing.B) {
+	for _, c := range cases {
+		b.Run(c.test, func(b *testing.B) {
+			testMask(b, MaskWithDJSON, c.in, c.out)
+
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				MaskWithDJSON([]byte(c.in))
+			}
+		})
+	}
+}

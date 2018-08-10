@@ -1,6 +1,10 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/a8m/djson"
+)
 
 var (
 	keywordSet = map[string]struct{}{
@@ -45,4 +49,18 @@ func mask(in interface{}) interface{} {
 		return masked
 	}
 	return in
+}
+
+func MaskWithDJSON(data []byte) ([]byte, error) {
+	v, err := djson.Decode(data)
+	if err != nil {
+		return nil, err
+	}
+
+	out, err := json.Marshal(mask(v))
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
 }
