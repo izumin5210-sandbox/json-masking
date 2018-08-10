@@ -2,8 +2,8 @@ package main
 
 import "testing"
 
-func Test_maskJSON(t *testing.T) {
-	cases := []struct {
+var (
+	cases = []struct {
 		test string
 		in   string
 		out  string
@@ -24,15 +24,27 @@ func Test_maskJSON(t *testing.T) {
 			out:  `{"users":[{"email":"test@example.com","password":"[FILTERED]"},{"email":"test2@example.com","password":"[FILTERED]"}]}`,
 		},
 	}
+)
 
+func testMask(tb testing.TB, maskFn func([]byte) ([]byte, error), in, out string) {
+	tb.Helper()
+	masked, err := maskFn([]byte(in))
+	if err != nil {
+		tb.Fatalf("Unexpected error %v", err)
+	}
+	if got, want := string(masked), out; got != want {
+		tb.Errorf("Mask() returned %q, want %q", got, want)
+	}
+}
+
+func BenchmarkMask_EncodingJSON(b *testing.B) {
 	for _, c := range cases {
-		t.Run(c.test, func(t *testing.T) {
-			out, err := Mask([]byte(c.in))
-			if err != nil {
-				t.Fatalf("Unexpected error %v", err)
-			}
-			if got, want := string(out), c.out; got != want {
-				t.Errorf("Mask() returned %q, want %q", got, want)
+		b.Run(c.test, func(b *testing.B) {
+			testMask(b, MaskWithEncodingJSON, c.in, c.out)
+
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				MaskWithEncodingJSON([]byte(c.in))
 			}
 		})
 	}

@@ -10,7 +10,7 @@ var (
 	}
 )
 
-func Mask(data []byte) ([]byte, error) {
+func MaskWithEncodingJSON(data []byte) ([]byte, error) {
 	var v interface{}
 
 	err := json.Unmarshal(data, &v)
