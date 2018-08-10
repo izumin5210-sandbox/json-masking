@@ -7,9 +7,19 @@
   revision = "afa66dc6bcfb823609f3c99135a8b6cc06738b9d"
   version = "1.0.0-alpha.1"
 
+[[projects]]
+  branch = "master"
+  name = "github.com/pquerna/ffjson"
+  packages = [
+    "ffjson",
+    "fflib/v1",
+    "fflib/v1/internal"
+  ]
+  revision = "af8b230fcd2007c7095168ca8ab94c68b60840c6"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "37cee57ac58e0b7bce9d2a8d923ff94f59640b439eb4901589e616b9e2d19624"
+  inputs-digest = "0ec25c9a2aba76af8667e3b571abfbbba686eca909b51dc5b501a50613a10c1c"
   solver-name = "gps-cdcl"
   solver-version = 1
