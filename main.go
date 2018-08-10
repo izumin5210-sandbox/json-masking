@@ -13,6 +13,7 @@ var (
 		"password_confirmation": struct{}{},
 		"token":                 struct{}{},
 	}
+	filteredPlaceholder = "[FILTERED]"
 )
 
 func MaskWithEncodingJSON(data []byte) ([]byte, error) {
@@ -36,18 +37,17 @@ func mask(in interface{}) interface{} {
 	case map[string]interface{}:
 		for k, v := range in {
 			if _, ok := keywordSet[k]; ok {
-				in[k] = "[FILTERED]"
+				in[k] = filteredPlaceholder
 			} else {
 				in[k] = mask(v)
 			}
 		}
 		return in
 	case []interface{}:
-		masked := make([]interface{}, 0, len(in))
-		for _, v := range in {
-			masked = append(masked, mask(v))
+		for i := 0; i < len(in); i++ {
+			in[i] = mask(in[i])
 		}
-		return masked
+		return in
 	}
 	return in
 }
