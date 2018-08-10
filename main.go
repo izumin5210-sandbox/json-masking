@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/a8m/djson"
+	"github.com/pquerna/ffjson/ffjson"
 )
 
 var (
@@ -58,6 +59,22 @@ func MaskWithDJSON(data []byte) ([]byte, error) {
 	}
 
 	out, err := json.Marshal(mask(v))
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+func MaskWithFFJSON(data []byte) ([]byte, error) {
+	var v interface{}
+
+	err := ffjson.Unmarshal(data, &v)
+	if err != nil {
+		return nil, err
+	}
+
+	out, err := ffjson.Marshal(mask(v))
 	if err != nil {
 		return nil, err
 	}

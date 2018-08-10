@@ -62,3 +62,16 @@ func BenchmarkMask_DJSON(b *testing.B) {
 		})
 	}
 }
+
+func BenchmarkMask_FFJSON(b *testing.B) {
+	for _, c := range cases {
+		b.Run(c.test, func(b *testing.B) {
+			testMask(b, MaskWithFFJSON, c.in, c.out)
+
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				MaskWithFFJSON([]byte(c.in))
+			}
+		})
+	}
+}
