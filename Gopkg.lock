@@ -8,6 +8,12 @@
   version = "1.0.0-alpha.1"
 
 [[projects]]
+  name = "github.com/fatih/structs"
+  packages = ["."]
+  revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
+  version = "v1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/pquerna/ffjson"
   packages = [
@@ -20,6 +26,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0ec25c9a2aba76af8667e3b571abfbbba686eca909b51dc5b501a50613a10c1c"
+  inputs-digest = "141a738f055687d58920c3942d6436bbd5232eee1421d347232c338cdd355f09"
   solver-name = "gps-cdcl"
   solver-version = 1
