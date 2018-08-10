@@ -28,3 +28,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/a8m/djson"
+  version = "1.0.0-alpha.1"
